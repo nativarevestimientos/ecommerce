@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --foreground-rgb: 0 0 0;
+  --page-bg: 243 242 241;
+  --surface: 255 255 255;
+  --font-satoshi: "Satoshi", Arial, Helvetica, sans-serif;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--page-bg));
+}
+
+.font-satoshi,
+.font-satoshi-variable {
+  font-family: var(--font-satoshi);
+}
+
+@layer base {
+  :root {
+    --brand-50: 247 242 243;
+    --brand-100: 239 231 233;
+    --brand-200: 231 218 221;
+    --brand-300: 209 185 188;
+    --brand-400: 165 120 124;
+    --brand-500: 129 90 94;
+    --brand-600: 101 62 65;
+    --brand-700: 79 47 50;
+    --brand-800: 58 35 38;
+    --brand-900: 41 24 26;
+    --brand: rgb(var(--brand-600));
+    --brand-soft: rgb(var(--brand-200));
+    --brand-foreground: rgb(243, 242, 241);
+
+    --background: 30 13% 95%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
+    --primary: 355 24% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 13% 95%;
+    --secondary-foreground: 0 0% 6%;
+    --muted: 30 13% 95%;
+    --muted-foreground: 0 0% 46.1%;
+    --accent: 355 20% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 355 24% 32%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 0 0% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 355 24% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 6%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 355 20% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 355 24% 32%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    background-color: rgb(var(--page-bg));
+    @apply text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+} 
+
+.footer {
+  background:
+    linear-gradient(rgb(var(--brand-900) / 0.38), rgb(var(--brand-900) / 0.38)),
+    url("/images/noise.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+
+@layer utilities {
+  .section-bg-1 {
+    background-color: rgb(var(--page-bg));
+    border-top: 1px solid rgb(var(--brand-600) / 0.08);
+  }
+  .section-bg-2 {
+    background-color: rgb(var(--page-bg));
+    border-top: 1px solid rgb(var(--brand-600) / 0.08);
+  }
+  .section-bleed {
+    background-color: rgb(var(--page-bg));
+    border-top: 1px solid rgb(var(--brand-600) / 0.06);
+  }
+  .section-pad {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .surface-card {
+    background-color: rgb(var(--surface));
+    border: 1px solid rgb(var(--brand-600) / 0.16);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.06);
+  }
+
+  .btn-brand {
+    background-color: rgb(var(--brand-600));
+    color: rgb(var(--surface));
+  }
+
+  .btn-brand:hover {
+    background-color: rgb(var(--brand-700));
+  }
+
+  .btn-surface {
+    background-color: rgb(var(--surface));
+    border: 1px solid rgb(var(--brand-600) / 0.28);
+    color: rgb(var(--brand-700));
+  }
+
+  .btn-surface:hover {
+    background-color: rgb(var(--brand-600) / 0.06);
+    border-color: rgb(var(--brand-600) / 0.35);
+  }
+}
+
+.pac-container {
+  z-index: 9999 !important;
+  background-color: rgb(var(--surface)) !important;
+  border: 1px solid rgb(var(--brand-600) / 0.16) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.12) !important;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.pac-item {
+  padding: 0.75rem 0.875rem;
+  border-top: 1px solid rgb(var(--brand-600) / 0.10);
+  background-color: rgb(var(--surface));
+  cursor: pointer;
+}
+
+.pac-item:hover,
+.pac-item-selected {
+  background-color: rgb(var(--brand-600) / 0.06);
+}
+
+.pac-item-query {
+  font-size: 0.95rem;
+}

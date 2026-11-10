@@ -1,0 +1,50 @@
+.prices { margin-top: 8px; }
+.original { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-bottom: 4px; }
+.original del { color: #6b7280; font-size: 12px; }
+.productDiscount { border: 1px solid #fecaca; border-radius: 999px; padding: 2px 7px; background: #fee2e2; color: #b91c1c; font-size: 10px; font-weight: 650; line-height: 1.3; }
+.mainPrice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; color: #111827; }
+.mainPrice strong { font-size: 24px; font-weight: 750; line-height: 1.15; letter-spacing: -.035em; }
+.mainPrice > span, .regular { color: #6b7280; font-size: 11px; }
+.transfer { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; padding: 7px 9px; border: 1px solid rgb(var(--brand-600) / .25); border-radius: 8px; background: rgb(var(--brand-50)); color: rgb(var(--brand-800)); }
+.transfer > span { font-size: 10px; font-weight: 600; line-height: 1.3; }
+.transfer b { font-size: 16px; line-height: 1.2; }
+.transfer small { font-size: 10px; font-weight: 500; }
+.cash { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; padding: 4px 1px; color: rgb(var(--brand-800)); }
+.cash > span { font-size: 10px; line-height: 1.3; }
+.cash b { font-size: 15px; line-height: 1.2; }
+.cash small { font-size: 10px; font-weight: 500; }
+
+/* The actual catalog card, compacted for a dialog rather than reimplemented. */
+.popup { min-width: 0; padding: 6px; box-shadow: none; }
+.popup [data-card-image] { aspect-ratio: 3 / 4; }
+.popup [data-card-image] img { width: 100%; height: 100%; object-fit: cover; padding: 0; }
+.popup [data-card-image] + div { margin-top: 6px; }
+.popup [data-card-title] { min-height: 0; margin-top: 0; font-size: 11px; line-height: 1.3; }
+.popup .prices { margin-top: 4px; }
+.popup .original { gap: 3px; margin-bottom: 2px; }
+.popup .mainPrice strong { font-size: 18px; }
+.popup .original del { font-size: 10px; }
+.popup .productDiscount { font-size: 9px; padding: 2px 5px; }
+.popup .transfer { padding: 5px; margin-top: 4px; gap: 2px; }
+.popup .transfer b { font-size: 14px; }
+.popup .transfer > span { font-size: 10px; }
+
+@media (max-width: 640px), (max-height: 600px) {
+  .popup [data-card-title] { font-size: 10px; }
+  .popup .original del { font-size: 9px; }
+  .popup .productDiscount { font-size: 8px; padding: 1px 4px; }
+  .popup .mainPrice { gap: 2px; }
+  .popup .mainPrice strong { font-size: clamp(14px, 4vw, 16px); }
+  .popup .mainPrice > span { font-size: 9px; }
+  .popup .transfer > span { font-size: 9px; }
+  .popup .transfer b { font-size: 13px; }
+  .popup .transfer small { font-size: 9px; }
+  .popup .cash { margin-top: 4px; padding: 0; }
+  .popup .cash > span { font-size: 9px; }
+  .popup .cash b { font-size: 12px; }
+  .popup .cash small { font-size: 9px; }
+}
+@media (max-height: 480px) and (min-width: 641px) {
+  .popup [data-card-image] { aspect-ratio: auto; height: 54px; }
+  .popup .transfer { padding: 4px; }
+}

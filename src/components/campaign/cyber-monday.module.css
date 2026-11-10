@@ -1,0 +1,219 @@
+/* Consume the storefront's brand tokens, never recolor the official event logo. */
+.bar,
+.modal {
+  --cyber-foreground: rgb(var(--brand-50));
+  --cyber-muted: rgb(var(--brand-200));
+  --cyber-accent: rgb(var(--brand-100));
+  --cyber-border: rgb(var(--brand-200) / .22);
+  color: var(--cyber-foreground);
+  font-family: var(--font-satoshi);
+}
+
+.bar { --cyber-foreground: #fff; --cyber-muted: #fff; --cyber-border: rgb(255 255 255 / .25); padding: 0; transition: padding .3s ease; }
+.barInner { max-width: none; margin: auto; padding: 4px 24px; display: flex; align-items: center; justify-content: center; gap: 32px; background: #000; border: 1px solid transparent; border-radius: 0; transition: border-radius .3s ease, box-shadow .3s ease, border-color .3s ease; }
+.bar[data-detached="true"] { padding: 6px 8px 8px; }
+.bar[data-detached="true"] .barInner { max-width: clamp(22rem, 94vw, 110rem); border-color: var(--cyber-border); border-radius: 999px; box-shadow: 0 14px 36px rgb(0 0 0 / .14); }
+@media (min-width: 768px) { .bar[data-detached="true"] { padding-left: 16px; padding-right: 16px; } }
+.barBrand, .barActions, .modalHeader { display: flex; align-items: center; gap: 18px; }
+.logo { object-fit: contain; flex-shrink: 0; max-width: 140px; }
+.nameLogo { display: inline-flex; align-items: center; gap: 10px; max-width: 200px; font-size: 18px; font-weight: 750; line-height: 1.2; overflow-wrap: anywhere; }
+.nameLogo > svg { flex-shrink: 0; }
+.nameLogo > span { min-width: 0; }
+.smallNameLogo { max-width: 120px; font-size: 12px; }
+.barBrand { min-width: 0; }
+.barBrand > span { min-width: 0; }
+.barBrand strong { overflow-wrap: anywhere; }
+.barBrand strong { display: block; font-size: 13px; font-weight: 700; }
+.barActions { gap: 24px; }
+.barButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  gap: 8px;
+  border: 1px solid rgb(255 255 255 / .55);
+  border-radius: 999px;
+  padding: 10px 17px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  transition: background .2s;
+}
+.barButton:hover { background: rgb(255 255 255 / .12); }
+.status { display: inline-flex; max-width: 170px; border-radius: 999px; padding: 6px 10px; background: rgb(var(--brand-100)); font-size: 9px; font-weight: 700; letter-spacing: .06em; color: var(--cyber-accent); line-height: 1.4; overflow-wrap: anywhere; }
+.description { color: var(--cyber-muted); font-size: 14px; line-height: 1.65; max-width: 440px; overflow-wrap: anywhere; }
+.countdown { display: flex; gap: 10px; }
+.timeUnit { min-width: 62px; text-align: center; }
+.digits { display: block; border: 1px solid var(--cyber-border); background: rgb(var(--brand-50) / .04); border-radius: 10px; padding: 10px 8px; font-size: 30px; font-weight: 500; line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.timeLabel { display: block; font-size: 9px; color: var(--cyber-muted); margin-top: 7px; letter-spacing: .08em; text-transform: uppercase; }
+.compact { gap: 8px; }
+.compact .timeUnit { min-width: 29px; }
+.compact .digits { border: 0; padding: 0; background: none; font-size: 20px; border-radius: 0; }
+.compact .timeLabel { font-size: 8px; margin-top: 3px; }
+.bar .digits { font-weight: 800; }
+.deadline { margin-top: 12px; color: var(--cyber-muted); font-size: 10px; line-height: 1.6; }
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: fit-content;
+  min-width: 220px;
+  min-height: 48px;
+  border-radius: 999px;
+  padding: 15px 23px;
+  margin-top: 24px;
+  background: rgb(var(--brand-100));
+  color: rgb(var(--brand-900));
+  font-size: 13px;
+  font-weight: 800;
+  transition: background .2s, transform .2s;
+}
+.cta:hover { background: rgb(var(--brand-50)); transform: translateY(-2px); }
+.terms { font-size: 10px; line-height: 1.65; color: var(--cyber-muted); margin-top: 17px; max-width: 440px; overflow-wrap: anywhere; }
+.overlay { position: fixed; inset: 0; z-index: 100; background: rgb(var(--brand-900) / .65); backdrop-filter: blur(7px); animation: cyberFade .2s ease-out; }
+.modal {
+  --cyber-foreground: rgb(var(--brand-900));
+  --cyber-muted: rgb(var(--brand-600));
+  --cyber-accent: rgb(var(--brand-600));
+  --cyber-border: rgb(var(--brand-200));
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  width: calc(100% - 32px);
+  max-width: 620px;
+  max-height: calc(100vh - 32px);
+  max-height: min(720px, calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+  overflow: hidden;
+  border: 1px solid var(--cyber-border);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgb(var(--surface)), rgb(var(--brand-50)));
+  color-scheme: light;
+  box-shadow: 0 32px 120px rgb(var(--brand-900) / .25);
+  animation: cyberFade .25s ease-out;
+}
+.modalScroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 22px 26px 8px; scrollbar-width: thin; scrollbar-color: rgb(var(--brand-300)) transparent; }
+.close {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(var(--brand-200));
+  border-radius: 50%;
+  color: rgb(var(--brand-700));
+  background: rgb(var(--surface));
+  box-shadow: 0 3px 12px rgb(var(--brand-900) / .05);
+  transition: background .2s;
+}
+.close:hover { background: rgb(var(--brand-100)); }
+.modalHeader { justify-content: flex-start; padding-right: 48px; gap: 16px; margin-bottom: 12px; min-height: 48px; }
+.modalHeader .logo { width: 76px; height: 50px; }
+.modalHeader .nameLogo { max-width: 280px; font-size: 16px; }
+.modalHeader .nameLogo > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.modalTitle { font-size: clamp(26px, 3vw, 32px); font-weight: 700; line-height: 1.12; letter-spacing: -.04em; margin: 0 0 10px; max-width: 490px; text-wrap: balance; overflow-wrap: anywhere; }
+.modalTimer { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 8px 16px; margin-top: 16px; border-radius: 12px; background: rgb(var(--brand-50)); padding: 12px 14px; }
+.modalTimerHeader { display: flex; align-items: center; gap: 6px; color: var(--cyber-muted); font-size: 12px; }
+.modalTimerHeader > svg { flex-shrink: 0; }
+.modalTimer .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; justify-self: end; width: min(100%, 220px); }
+.modalTimer .timeUnit { min-width: 0; }
+.modalTimer .digits { background: none; border: 0; border-radius: 0; padding: 0; font-size: 23px; font-weight: 650; }
+.modalTimer .timeLabel { margin-top: 4px; font-size: 8px; }
+.modalTimer .deadline { grid-column: 1 / -1; text-align: right; margin-top: 0; font-size: 10px; }
+.modalProducts { display: grid; grid-template-columns: repeat(3, minmax(0, 180px)); justify-content: center; align-items: start; gap: 10px; margin-top: 18px; }
+.modalProducts[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 180px)); }
+.modalProducts[data-count="1"] { grid-template-columns: minmax(0, 180px); }
+.modalProducts > [data-product-card] { scroll-snap-align: start; }
+.modalFooter { flex-shrink: 0; padding: 12px 26px 16px; background: rgb(var(--surface)); }
+.modalFooter > .cta { width: 100%; margin-top: 0; justify-content: center; gap: 12px; background: rgb(var(--brand-600)); color: rgb(var(--surface)); }
+.modalFooter > .cta:hover { background: rgb(var(--brand-700)); }
+.conditions { color: var(--cyber-muted); font-size: 11px; margin-top: 4px; }
+.conditions > summary { display: list-item; width: fit-content; cursor: pointer; padding: 10px 0; min-height: 36px; list-style-position: inside; text-underline-offset: 3px; }
+.conditions > summary:hover { text-decoration: underline; }
+.conditions .terms { margin: 0 0 10px; max-width: none; font-size: 11px; }
+.bar button:focus-visible { outline: 3px solid rgb(var(--brand-100)); outline-offset: 4px; }
+.modal a:focus-visible, .modal button:focus-visible, .modal summary:focus-visible, .modal [role="region"]:focus-visible { outline: 3px solid rgb(var(--brand-400)); outline-offset: 3px; }
+@keyframes cyberFade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 640px) {
+  .barInner { padding: 4px 10px; gap: 12px; }
+  .barBrand { gap: 9px; }
+  .barBrand strong { font-size: 10px; max-width: 110px; }
+  .barBrand > span:not(.nameLogo) { display: none; }
+  .barBrand .logo { width: 39px; height: 44px; }
+  .smallNameLogo { max-width: 90px; font-size: 10px; gap: 6px; }
+  .smallNameLogo > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .barActions { gap: 10px; }
+  .barButton { padding: 8px; font-size: 10px; gap: 3px; }
+  .compact { gap: 4px; }
+  .compact .timeUnit { min-width: 22px; }
+  .compact .digits { font-size: 17px; }
+  .compact .timeLabel { font-size: 7px; }
+}
+
+/* Also use the compact layout on short landscape screens and browser-chrome
+   constrained viewports. Products come first; the footer occupies its own row. */
+@media (max-width: 640px), (max-height: 600px) {
+  .modal { width: calc(100% - 24px); border-radius: 20px; max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+  .modalScroll { padding: 16px 16px 2px; scroll-padding: 10px; }
+  .modalHeader { margin-bottom: 10px; gap: 10px; min-height: 44px; padding-right: 44px; }
+  .modalHeader .logo { width: 66px; height: 44px; }
+  .modalHeader .nameLogo { font-size: 13px; max-width: 170px; gap: 7px; }
+  .modalHeader .nameLogo > svg { width: 19px; }
+  .status { padding: 5px 7px; font-size: 8px; max-width: 135px; }
+  .close { top: 10px; right: 10px; box-shadow: none; }
+  .modalTitle { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 24px; line-height: 1.12; letter-spacing: -.035em; margin: 0 0 14px; max-width: none; text-wrap: initial; }
+  .modal .description { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .modalProducts { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: min(46%, 164px); justify-content: start; gap: 10px; margin-top: 0; overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .modalProducts::-webkit-scrollbar { display: none; }
+  .modalProducts[data-count] { grid-template-columns: none; }
+  .modalProducts[data-count="2"] { grid-auto-columns: min(164px, calc((100% - 10px) / 2)); justify-content: center; }
+  .modalProducts[data-count="1"] { grid-auto-columns: min(164px, 100%); justify-content: center; }
+  .modalTimer { margin-top: 12px; padding: 10px; gap: 8px; }
+  .modalTimerHeader { font-size: 10px; gap: 4px; }
+  .modalTimerHeader > svg { width: 12px; height: 12px; }
+  .modalTimer .countdown { gap: 7px; width: min(100%, 166px); }
+  .modalTimer .digits { font-size: 18px; }
+  .modalTimer .timeLabel { font-size: 7px; margin-top: 3px; }
+  .modalTimer .deadline { display: none; }
+  .modalFooter { padding: 10px 16px 14px; }
+  .modalFooter > .cta { min-width: 0; min-height: 44px; padding: 12px 16px; font-size: 13px; line-height: 1.25; text-align: center; }
+  .modalFooter > .cta > svg { flex-shrink: 0; }
+  .conditions { font-size: 10px; margin-top: 0; }
+  .conditions > summary { min-height: 32px; padding: 8px 0; }
+}
+
+/* Keep the portrait composition on short phones, without hiding prices
+   behind the footer when the browser reduces its available height. */
+@media (max-width: 640px) and (min-height: 481px) and (max-height: 600px) {
+  .modalProducts { grid-auto-columns: min(46%, 144px); }
+  .modalProducts[data-count="2"] { grid-auto-columns: min(144px, calc((100% - 10px) / 2)); }
+  .modalProducts[data-count="1"] { grid-auto-columns: min(144px, 100%); }
+}
+
+@media (max-height: 480px) {
+  .modalScroll { padding: 12px 16px 2px; }
+  .modalHeader { float: left; width: 62px; min-height: 36px; margin-bottom: 8px; padding-right: 0; }
+  .modalHeader .logo { width: 58px; height: 36px; }
+  .modalHeader .nameLogo { font-size: 12px; }
+  .modalTitle { font-size: 18px; min-height: 36px; margin: 0 36px 8px 72px; }
+  .modalProducts { clear: both; }
+  .modalFooter { padding: 8px 16px 10px; }
+}
+
+@media (hover: none) { .cta:hover { transform: none; } }
+
+@media (max-width: 380px) { .barBrand > span:not(.nameLogo) { display: none; } .smallNameLogo { max-width: 78px; } }
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .modal { animation: none; }
+  .cta, .bar, .barInner { transition: none; }
+  .cta:hover { transform: none; }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "overrides": [
+    {
+      "files": ["src/app/layout.tsx"],
+      "rules": {
+        "@next/next/no-img-element": "off"
+      }
+    }
+  ]
+}
