@@ -11,21 +11,21 @@ type BannerItem = {
 const Header = () => {
   const urlsDesktop = useMemo(
     () => [
-      "/images/home/hero/desktop/09.jpg",
-      "/images/home/hero/desktop/05.png",
-      "/images/home/hero/desktop/06.png",
-      "/images/home/hero/desktop/07.png",
-      "/images/home/hero/desktop/08.png",
+      "/images/home/hero/desktop/09.webp",
+      "/images/home/hero/desktop/05.webp",
+      "/images/home/hero/desktop/06.webp",
+      "/images/home/hero/desktop/07.webp",
+      "/images/home/hero/desktop/08.webp",
     ],
     [],
   );
   const urlsMobile = useMemo(
     () => [
-      "/images/home/hero/mobile/09.jpg",
-      "/images/home/hero/mobile/05.png",
-      "/images/home/hero/mobile/06.png",
-      "/images/home/hero/mobile/07.png",
-      "/images/home/hero/mobile/08.png",
+      "/images/home/hero/mobile/09.webp",
+      "/images/home/hero/mobile/05.webp",
+      "/images/home/hero/mobile/06.webp",
+      "/images/home/hero/mobile/07.webp",
+      "/images/home/hero/mobile/08.webp",
     ],
     [],
   );
@@ -39,7 +39,7 @@ const Header = () => {
         id: String(idx + 1),
         imagenUrl: desktop,
         imagenUrlMobile: mobile,
-        href: /\/09\.(png|jpg)$/.test(desktop) ? "/shop?filter=cyberMonday" : undefined,
+        href: /\/09\.webp$/.test(desktop) ? "/shop?filter=cyberMonday" : undefined,
       };
     });
   }, [urlsDesktop, urlsMobile]);
@@ -98,6 +98,7 @@ const Header = () => {
 
   // Swipe con framer-motion
   const dragThreshold = 80;
+  const nextIndex = (indice + 1) % banners.length;
 
   return (
     <section aria-roledescription="carousel" aria-label="Banner principal" className="relative w-full overflow-hidden bg-black">
@@ -120,9 +121,12 @@ const Header = () => {
           style={{ width: `${banners.length * 100}%` }}
         >
           {banners.map((b, i) => {
-            const isCyberMondayBanner = /\/09\.(png|jpg)$/.test(b.imagenUrl);
-            const bannerNumber = b.imagenUrl.match(/\/(\d+)\.png$/)?.[1] ?? String(i + 1);
-            const picture = (
+            const isCurrentSlide = i === indice;
+            const isNextSlide = i === nextIndex;
+            const shouldLoadImage = isCurrentSlide || isNextSlide;
+            const isCyberMondayBanner = /\/09\.webp$/.test(b.imagenUrl);
+            const bannerNumber = b.imagenUrl.match(/\/(\d+)\.webp$/)?.[1] ?? String(i + 1);
+            const picture = shouldLoadImage ? (
               <picture>
                 <source media="(max-width: 767px)" srcSet={b.imagenUrlMobile} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -130,15 +134,27 @@ const Header = () => {
                   src={b.imagenUrl}
                   alt={isCyberMondayBanner ? "Banner Cyber Monday" : `Banner ${bannerNumber}`}
                   className="w-full h-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority={i === 0 ? "high" : isNextSlide ? "low" : "auto"}
                 />
               </picture>
-            );
+            ) : null;
 
             return (
-              <div key={b.id} className="relative w-full h-full shrink-0" style={{ width: `${100 / banners.length}%` }}>
+              <div
+                key={b.id}
+                aria-hidden={!isCurrentSlide}
+                className="relative w-full h-full shrink-0"
+                style={{ width: `${100 / banners.length}%` }}
+              >
                 <div className="w-full h-full relative">
                   {b.href ? (
-                    <a href={b.href} aria-label="Ver productos Cyber Monday" className="block w-full h-full">
+                    <a
+                      href={b.href}
+                      aria-label="Ver productos Cyber Monday"
+                      tabIndex={isCurrentSlide ? 0 : -1}
+                      className="block w-full h-full"
+                    >
                       {picture}
                     </a>
                   ) : picture}

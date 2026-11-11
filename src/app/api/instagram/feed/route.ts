@@ -66,9 +66,9 @@ function getHardcodedPosts(username: string): InstagramPost[] {
   });
 
   return [
-    make("hardcoded-1", "/images/home/hero/desktop/05.png", "Nativa Revestimientos"),
-    make("hardcoded-2", "/images/home/hero/desktop/06.png", "Revestimientos y diseños"),
-    make("hardcoded-3", "/images/home/hero/desktop/07.png", "Inspiración para tus espacios"),
+    make("hardcoded-1", "/images/home/hero/desktop/05.webp", "Nativa Revestimientos"),
+    make("hardcoded-2", "/images/home/hero/desktop/06.webp", "Revestimientos y diseños"),
+    make("hardcoded-3", "/images/home/hero/desktop/07.webp", "Inspiración para tus espacios"),
     make("hardcoded-4", "/images/home/collections/ofertas-especiales/desktop.png", "Colecciones destacadas"),
     make("hardcoded-5", "/images/home/collections/revestimientos/desktop.png", "Texturas y terminaciones"),
     make("hardcoded-6", "/images/home/collections/nuevos-ingresos/desktop.png", "Ideas y proyectos"),

@@ -4,56 +4,110 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { Product } from '@/types/product';
 import { resolveProductPricing } from '@/lib/product-pricing';
 import { X, Sparkles, ArrowRight } from 'lucide-react';
-import { api } from '@/lib/api';
+
+type OfferProduct = {
+  id: string;
+  name: string;
+  price: number;
+  finalPrice: number;
+  image: string | null;
+};
 
 const OfferPopup = () => {
-  const [currentOffer, setCurrentOffer] = useState<Product | null>(null);
+  const [currentOffer, setCurrentOffer] = useState<OfferProduct | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Efecto para cargar ofertas inicialmente y cada 2 minutos
+  // Carga una oferta cada minuto mientras la pestaña está visible.
   useEffect(() => {
+    let refreshTimer: ReturnType<typeof setTimeout> | null = null;
+    let requestController: AbortController | null = null;
+    let requestInFlight = false;
+    let hasRequested = false;
+    let stopped = false;
+    let disposed = false;
+
+    const clearRefreshTimer = () => {
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = null;
+    };
+
+    const scheduleRefresh = (delay: number) => {
+      clearRefreshTimer();
+      if (document.hidden || stopped || disposed) return;
+      refreshTimer = setTimeout(() => {
+        refreshTimer = null;
+        void fetchAndShowOffer();
+      }, delay);
+    };
+
     const fetchAndShowOffer = async () => {
+      if (document.hidden || stopped || disposed || requestInFlight) return;
+
+      requestInFlight = true;
+      hasRequested = true;
+      requestController = new AbortController();
       setIsLoading(true);
+
       try {
-        const fetchedProducts = await api.get<Product[]>(`/products`);
+        const response = await fetch('/api/products/offer', {
+          cache: 'no-store',
+          signal: requestController.signal,
+        });
+        if (!response.ok) throw new Error(`Offer request failed: ${response.status}`);
 
-        const commercialOffers = fetchedProducts.filter(product => 
-            product.specialOffer || (product.discount?.percentage > 0 || product.discount?.amount > 0)
-          );
+        const offer = (await response.json()) as OfferProduct | null;
+        if (disposed) return;
 
-        if (commercialOffers.length > 0) {
-          const randomOffer = commercialOffers[Math.floor(Math.random() * commercialOffers.length)];
-          setCurrentOffer(randomOffer);
+        if (offer) {
+          setCurrentOffer(offer);
           setIsVisible(true);
         } else {
           setCurrentOffer(null);
           setIsVisible(false);
+          stopped = true;
         }
-
       } catch (error) {
-        console.error('Error fetching offers:', error);
-        setCurrentOffer(null);
-        setIsVisible(false);
+        const wasPaused = requestController.signal.aborted && !disposed;
+        if (!wasPaused && !disposed) {
+          console.error('Error fetching offer:', error);
+          setCurrentOffer(null);
+          setIsVisible(false);
+          stopped = true;
+        }
       } finally {
-        setIsLoading(false);
+        requestInFlight = false;
+        requestController = null;
+        if (!disposed) {
+          setIsLoading(false);
+          if (!stopped && !document.hidden) scheduleRefresh(60000);
+        }
       }
     };
 
-    // Mostrar oferta inicial después de 3 segundos
-    const initialTimer = setTimeout(fetchAndShowOffer, 3000);
-    
-    // Mostrar nuevas ofertas cada 2 minutos
-    const interval = setInterval(fetchAndShowOffer, 60000);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        clearRefreshTimer();
+        requestController?.abort();
+        return;
+      }
+
+      if (!stopped && !requestInFlight) scheduleRefresh(hasRequested ? 0 : 3000);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    scheduleRefresh(3000);
 
     return () => {
-      clearTimeout(initialTimer);
-      clearInterval(interval);
+      disposed = true;
+      stopped = true;
+      clearRefreshTimer();
+      requestController?.abort();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []); // Solo se ejecuta una vez al montar el componente
+  }, []);
 
   // Efecto separado para manejar el temporizador de ocultamiento
   useEffect(() => {
@@ -165,7 +219,7 @@ const OfferPopup = () => {
                   <div className="relative flex-shrink-0">
                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-[rgb(var(--brand-50))] to-[rgb(var(--brand-100))] border border-[rgb(var(--brand-200))]/60 relative">
                       <Image
-                        src={currentOffer.images[0] || currentOffer.srcUrl || '/placeholder.png'}
+                        src={currentOffer.image || '/placeholder.png'}
                         alt={currentOffer.name}
                         fill
                         className="object-cover"

@@ -14,7 +14,7 @@ const proyectosDestacados = [
     id: 1,
     titulo: "Cocinas Modernas",
     descripcion: "Diseñamos y construimos cocinas únicas que combinan funcionalidad con estilo contemporáneo.",
-    imagen: "/images/home/hero/desktop/05.png",
+    imagen: "/images/home/hero/desktop/05.webp",
     url: "/obras/cocinas-modernas",
     categoria: "Cocinas",
     stats: "150+ proyectos realizados"
@@ -23,7 +23,7 @@ const proyectosDestacados = [
     id: 2,
     titulo: "Decks Exteriores",
     descripcion: "Espacios exteriores que resisten el tiempo y embellecen tu hogar con maderas seleccionadas.",
-    imagen: "/images/home/hero/desktop/06.png",
+    imagen: "/images/home/hero/desktop/06.webp",
     url: "/obras/decks-exteriores",
     categoria: "Exteriores",
     stats: "200+ decks construidos"
@@ -32,7 +32,7 @@ const proyectosDestacados = [
     id: 3,
     titulo: "Muebles a Medida",
     descripcion: "Mobiliario personalizado que se adapta perfectamente a tu espacio y necesidades.",
-    imagen: "/images/home/hero/desktop/07.png",
+    imagen: "/images/home/hero/desktop/07.webp",
     url: "/obras/muebles-medida",
     categoria: "Mobiliario",
     stats: "500+ muebles creados"
