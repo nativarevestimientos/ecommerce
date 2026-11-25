@@ -5,13 +5,11 @@ type BannerItem = {
   id: string;
   imagenUrl: string;
   imagenUrlMobile: string;
-  href?: string;
 };
 
 const Header = () => {
   const urlsDesktop = useMemo(
     () => [
-      "/images/home/hero/desktop/09.webp",
       "/images/home/hero/desktop/05.webp",
       "/images/home/hero/desktop/06.webp",
       "/images/home/hero/desktop/07.webp",
@@ -21,7 +19,6 @@ const Header = () => {
   );
   const urlsMobile = useMemo(
     () => [
-      "/images/home/hero/mobile/09.webp",
       "/images/home/hero/mobile/05.webp",
       "/images/home/hero/mobile/06.webp",
       "/images/home/hero/mobile/07.webp",
@@ -39,7 +36,6 @@ const Header = () => {
         id: String(idx + 1),
         imagenUrl: desktop,
         imagenUrlMobile: mobile,
-        href: /\/09\.webp$/.test(desktop) ? "/shop?filter=cyberMonday" : undefined,
       };
     });
   }, [urlsDesktop, urlsMobile]);
@@ -124,7 +120,6 @@ const Header = () => {
             const isCurrentSlide = i === indice;
             const isNextSlide = i === nextIndex;
             const shouldLoadImage = isCurrentSlide || isNextSlide;
-            const isCyberMondayBanner = /\/09\.webp$/.test(b.imagenUrl);
             const bannerNumber = b.imagenUrl.match(/\/(\d+)\.webp$/)?.[1] ?? String(i + 1);
             const picture = shouldLoadImage ? (
               <picture>
@@ -132,7 +127,7 @@ const Header = () => {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={b.imagenUrl}
-                  alt={isCyberMondayBanner ? "Banner Cyber Monday" : `Banner ${bannerNumber}`}
+                  alt={`Banner ${bannerNumber}`}
                   className="w-full h-full object-cover object-center"
                   loading="eager"
                   fetchPriority={i === 0 ? "high" : isNextSlide ? "low" : "auto"}
@@ -148,16 +143,7 @@ const Header = () => {
                 style={{ width: `${100 / banners.length}%` }}
               >
                 <div className="w-full h-full relative">
-                  {b.href ? (
-                    <a
-                      href={b.href}
-                      aria-label="Ver productos Cyber Monday"
-                      tabIndex={isCurrentSlide ? 0 : -1}
-                      className="block w-full h-full"
-                    >
-                      {picture}
-                    </a>
-                  ) : picture}
+                  {picture}
                 </div>
               </div>
             );
